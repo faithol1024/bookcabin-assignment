@@ -1,0 +1,40 @@
+{
+  "Flights": [
+    {
+      "ID": "GA208_GarudaIndonesia",
+      "Provider": "Garuda Indonesia",
+      "Airline": {
+        "Name": "Garuda Indonesia",
+        "Code": "GA"
+      },
+      "FlightNumber": "GA208",
+      "Departure": {
+        "Code": "CGK",
+        "City": "Jakarta",
+        "Time": "2025-12-22T07:00:00+07:00"
+      },
+      "Arrival": {
+        "Code": "JOG",
+        "City": "Yogyakarta",
+        "Time": "2025-12-22T08:15:00+07:00"
+      },
+      "Layovers": null,
+      "Fare": {
+        "Amount": "980000",
+        "Currency": "IDR"
+      },
+      "Price": 0,
+      "Original": null,
+      "AvailableSeats": 50,
+      "Cabin": "economy",
+      "Aircraft": null,
+      "Amenities": null,
+      "Baggage": {
+        "CarryOn": "",
+        "Checked": ""
+      },
+      "Warnings": null
+    }
+  ],
+  "Rejected": 0
+}

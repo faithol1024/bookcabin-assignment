@@ -1,0 +1,33 @@
+version: "2"
+
+run:
+  timeout: 5m
+
+linters:
+  default: none
+  enable:
+    - bodyclose
+    - contextcheck
+    - errcheck
+    - govet
+    - ineffassign
+    - revive
+    - staticcheck
+    - unused
+  exclusions:
+    presets:
+      - std-error-handling
+    rules:
+      # self-explanatory identifiers need no doc comment
+      - linters:
+          - revive
+        text: "^exported: "
+
+formatters:
+  enable:
+    - gofmt
+    - goimports
+  settings:
+    goimports:
+      local-prefixes:
+        - github.com/faithol1024/bookcabin-assignment

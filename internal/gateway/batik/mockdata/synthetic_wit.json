@@ -1,0 +1,36 @@
+{
+  "code": 200,
+  "message": "OK",
+  "results": [
+    {
+      "flightNumber": "ID6180",
+      "airlineName": "Batik Air",
+      "airlineIATA": "ID",
+      "origin": "CGK",
+      "destination": "DJJ",
+      "departureDateTime": "2025-12-20T09:00:00+0700",
+      "arrivalDateTime": "2025-12-20T18:45:00+0900",
+      "travelTime": "7h 45m",
+      "numberOfStops": 1,
+      "connections": [
+        {
+          "stopAirport": "UPG",
+          "stopDuration": "55m"
+        }
+      ],
+      "fare": {
+        "basePrice": 3500000,
+        "taxes": 400000,
+        "totalPrice": 3900000,
+        "currencyCode": "IDR",
+        "class": "Y"
+      },
+      "seatsAvailable": 22,
+      "aircraftModel": "Airbus A320",
+      "baggageInfo": "7kg cabin, 20kg checked",
+      "onboardServices": [
+        "Meal"
+      ]
+    }
+  ]
+}

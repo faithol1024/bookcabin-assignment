@@ -1,0 +1,47 @@
+{
+  "Flights": [
+    {
+      "ID": "ID6180_BatikAir",
+      "Provider": "Batik Air",
+      "Airline": {
+        "Name": "Batik Air",
+        "Code": "ID"
+      },
+      "FlightNumber": "ID6180",
+      "Departure": {
+        "Code": "CGK",
+        "City": null,
+        "Time": "2025-12-20T09:00:00+07:00"
+      },
+      "Arrival": {
+        "Code": "DJJ",
+        "City": null,
+        "Time": "2025-12-20T18:45:00+09:00"
+      },
+      "Layovers": [
+        {
+          "Airport": "UPG",
+          "Duration": 3300000000000
+        }
+      ],
+      "Fare": {
+        "Amount": "3900000",
+        "Currency": "IDR"
+      },
+      "Price": 0,
+      "Original": null,
+      "AvailableSeats": 22,
+      "Cabin": "economy",
+      "Aircraft": "Airbus A320",
+      "Amenities": [
+        "meal"
+      ],
+      "Baggage": {
+        "CarryOn": "7kg",
+        "Checked": "20kg"
+      },
+      "Warnings": null
+    }
+  ],
+  "Rejected": 0
+}

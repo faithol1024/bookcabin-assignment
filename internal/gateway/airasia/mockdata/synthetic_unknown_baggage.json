@@ -1,0 +1,19 @@
+{
+  "status": "ok",
+  "flights": [
+    {
+      "flight_code": "QZ7650",
+      "airline": "AirAsia",
+      "from_airport": "CGK",
+      "to_airport": "LOP",
+      "depart_time": "2025-12-22T12:00:00+07:00",
+      "arrive_time": "2025-12-22T14:55:00+08:00",
+      "duration_hours": 1.92,
+      "direct_flight": true,
+      "price_idr": 760000,
+      "seats": 58,
+      "cabin_class": "economy",
+      "baggage_note": "20kg checked included, priority boarding"
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "code": 200,
+  "message": "OK",
+  "results": [
+    {
+      "flightNumber": "ID6515",
+      "airlineName": "Batik Air",
+      "airlineIATA": "ID",
+      "origin": "DPS",
+      "destination": "CGK",
+      "departureDateTime": "2025-12-18T11:00:00+0800",
+      "arrivalDateTime": "2025-12-18T11:50:00+0700",
+      "travelTime": "1h 50m",
+      "numberOfStops": 0,
+      "fare": {
+        "basePrice": 960000,
+        "taxes": 120000,
+        "totalPrice": 1080000,
+        "currencyCode": "IDR",
+        "class": "Y"
+      },
+      "seatsAvailable": 29,
+      "aircraftModel": "Airbus A320",
+      "baggageInfo": "7kg cabin, 20kg checked",
+      "onboardServices": [
+        "Snack",
+        "Beverage"
+      ]
+    }
+  ]
+}

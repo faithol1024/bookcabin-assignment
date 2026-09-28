@@ -1,0 +1,40 @@
+{
+  "Flights": [
+    {
+      "ID": "JT31_LionAir",
+      "Provider": "Lion Air",
+      "Airline": {
+        "Name": "Lion Air",
+        "Code": "JT"
+      },
+      "FlightNumber": "JT31",
+      "Departure": {
+        "Code": "DPS",
+        "City": "Denpasar",
+        "Time": "2025-12-18T14:00:00+08:00"
+      },
+      "Arrival": {
+        "Code": "CGK",
+        "City": "Jakarta",
+        "Time": "2025-12-18T14:55:00+07:00"
+      },
+      "Layovers": null,
+      "Fare": {
+        "Amount": "820000",
+        "Currency": "IDR"
+      },
+      "Price": 0,
+      "Original": null,
+      "AvailableSeats": 60,
+      "Cabin": "economy",
+      "Aircraft": "Boeing 737-900ER",
+      "Amenities": null,
+      "Baggage": {
+        "CarryOn": "7 kg",
+        "Checked": "20 kg"
+      },
+      "Warnings": null
+    }
+  ],
+  "Rejected": 0
+}

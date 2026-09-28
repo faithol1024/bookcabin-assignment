@@ -1,0 +1,49 @@
+{
+  "success": true,
+  "data": {
+    "available_flights": [
+      {
+        "id": "JT790",
+        "carrier": {
+          "name": "Lion Air",
+          "iata": "JT"
+        },
+        "route": {
+          "from": {
+            "code": "CGK",
+            "name": "Soekarno-Hatta International",
+            "city": "Jakarta"
+          },
+          "to": {
+            "code": "UPG",
+            "name": "Sultan Hasanuddin International",
+            "city": "Makassar"
+          }
+        },
+        "schedule": {
+          "departure": "2025-12-20T23:30:00",
+          "departure_timezone": "Asia/Jakarta",
+          "arrival": "2025-12-21T02:10:00",
+          "arrival_timezone": "Asia/Makassar"
+        },
+        "flight_time": 100,
+        "is_direct": true,
+        "pricing": {
+          "total": 1050000,
+          "currency": "IDR",
+          "fare_type": "ECONOMY"
+        },
+        "seats_left": 70,
+        "plane_type": "Boeing 737-900ER",
+        "services": {
+          "wifi_available": false,
+          "meals_included": false,
+          "baggage_allowance": {
+            "cabin": "7 kg",
+            "hold": "20 kg"
+          }
+        }
+      }
+    ]
+  }
+}

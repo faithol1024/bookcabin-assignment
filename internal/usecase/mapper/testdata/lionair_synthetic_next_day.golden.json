@@ -1,0 +1,40 @@
+{
+  "Flights": [
+    {
+      "ID": "JT744_LionAir",
+      "Provider": "Lion Air",
+      "Airline": {
+        "Name": "Lion Air",
+        "Code": "JT"
+      },
+      "FlightNumber": "JT744",
+      "Departure": {
+        "Code": "CGK",
+        "City": "Jakarta",
+        "Time": "2025-12-16T05:30:00+07:00"
+      },
+      "Arrival": {
+        "Code": "DPS",
+        "City": "Denpasar",
+        "Time": "2025-12-16T08:15:00+08:00"
+      },
+      "Layovers": null,
+      "Fare": {
+        "Amount": "930000",
+        "Currency": "IDR"
+      },
+      "Price": 0,
+      "Original": null,
+      "AvailableSeats": 41,
+      "Cabin": "economy",
+      "Aircraft": "Boeing 737-900ER",
+      "Amenities": null,
+      "Baggage": {
+        "CarryOn": "7 kg",
+        "Checked": "20 kg"
+      },
+      "Warnings": null
+    }
+  ],
+  "Rejected": 0
+}

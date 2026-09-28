@@ -1,0 +1,42 @@
+{
+  "Flights": [
+    {
+      "ID": "GA344_GarudaIndonesia",
+      "Provider": "Garuda Indonesia",
+      "Airline": {
+        "Name": "Garuda Indonesia",
+        "Code": "GA"
+      },
+      "FlightNumber": "GA344",
+      "Departure": {
+        "Code": "DPS",
+        "City": "Denpasar",
+        "Time": "2025-12-17T10:00:00+08:00"
+      },
+      "Arrival": {
+        "Code": "SUB",
+        "City": "Surabaya",
+        "Time": "2025-12-17T10:05:00+07:00"
+      },
+      "Layovers": null,
+      "Fare": {
+        "Amount": "850000",
+        "Currency": "IDR"
+      },
+      "Price": 0,
+      "Original": null,
+      "AvailableSeats": 36,
+      "Cabin": "economy",
+      "Aircraft": "Boeing 737-800",
+      "Amenities": [
+        "meal"
+      ],
+      "Baggage": {
+        "CarryOn": "1 piece",
+        "Checked": "1 piece"
+      },
+      "Warnings": null
+    }
+  ],
+  "Rejected": 0
+}

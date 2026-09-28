@@ -1,0 +1,112 @@
+# production config. Secrets are ${secret:/path} placeholders.
+
+# generic
+server:
+  addr: ":8080"
+  read_header_timeout: 5s
+  read_timeout: 5s
+  write_timeout: 5s
+  shutdown_timeout: 10s
+
+log:
+  level: info
+
+# app-specific
+redis:
+  addr: ${secret:/secret/redis/addr}
+  password: ${secret:/secret/redis/password}
+  op_timeout: 50ms
+  connect_timeout: 2s
+
+flight_search:
+  cache:
+    ttl: 120s
+
+  search:
+    deadline: 800ms
+    score:
+      weights:
+        price: 0.5
+        duration: 0.3
+        stops: 0.15
+        redeye: 0.05
+      max_stops: 2
+      redeye_window: "00:00-05:59"
+
+  validation:
+    duration_mismatch_threshold: 5m
+
+  api:
+    page:
+      default_limit: 20
+      max_limit: 100
+    passengers:
+      min: 1
+      max: 9
+    legs:
+      min: 2
+      max: 5
+
+  providers:
+    garuda:
+      timeout: 200ms
+      retry:
+        max: 2
+        base: 50ms
+        max_backoff: 200ms
+      rate_limit:
+        rps: 20
+        burst: 20
+      breaker:
+        failures: 5
+        cooldown: 10s
+        half_open_requests: 1
+    lion:
+      timeout: 300ms
+      retry:
+        max: 2
+        base: 50ms
+        max_backoff: 200ms
+      rate_limit:
+        rps: 20
+        burst: 20
+      breaker:
+        failures: 5
+        cooldown: 10s
+        half_open_requests: 1
+    batik:
+      timeout: 500ms
+      retry:
+        max: 2
+        base: 50ms
+        max_backoff: 200ms
+      rate_limit:
+        rps: 20
+        burst: 20
+      breaker:
+        failures: 5
+        cooldown: 10s
+        half_open_requests: 1
+    airasia:
+      timeout: 200ms
+      retry:
+        max: 2
+        base: 50ms
+        max_backoff: 200ms
+      rate_limit:
+        rps: 20
+        burst: 20
+      breaker:
+        failures: 5
+        cooldown: 10s
+        half_open_requests: 1
+
+  currency:
+    # minor-unit digits per supported currency; IDR fares are whole rupiah
+    exponents:
+      IDR: 0
+      USD: 2
+      SGD: 2
+      MYR: 2
+      EUR: 2
+      JPY: 0

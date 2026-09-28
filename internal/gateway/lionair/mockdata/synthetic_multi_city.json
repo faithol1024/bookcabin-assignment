@@ -1,0 +1,49 @@
+{
+  "success": true,
+  "data": {
+    "available_flights": [
+      {
+        "id": "JT573",
+        "carrier": {
+          "name": "Lion Air",
+          "iata": "JT"
+        },
+        "route": {
+          "from": {
+            "code": "SUB",
+            "name": "Juanda International",
+            "city": "Surabaya"
+          },
+          "to": {
+            "code": "CGK",
+            "name": "Soekarno-Hatta International",
+            "city": "Jakarta"
+          }
+        },
+        "schedule": {
+          "departure": "2025-12-19T08:00:00",
+          "departure_timezone": "Asia/Jakarta",
+          "arrival": "2025-12-19T09:30:00",
+          "arrival_timezone": "Asia/Jakarta"
+        },
+        "flight_time": 90,
+        "is_direct": true,
+        "pricing": {
+          "total": 780000,
+          "currency": "IDR",
+          "fare_type": "ECONOMY"
+        },
+        "seats_left": 58,
+        "plane_type": "Boeing 737-900ER",
+        "services": {
+          "wifi_available": false,
+          "meals_included": false,
+          "baggage_allowance": {
+            "cabin": "7 kg",
+            "hold": "20 kg"
+          }
+        }
+      }
+    ]
+  }
+}

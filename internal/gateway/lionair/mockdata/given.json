@@ -1,0 +1,140 @@
+{
+  "success": true,
+  "data": {
+    "available_flights": [
+      {
+        "id": "JT740",
+        "carrier": {
+          "name": "Lion Air",
+          "iata": "JT"
+        },
+        "route": {
+          "from": {
+            "code": "CGK",
+            "name": "Soekarno-Hatta International",
+            "city": "Jakarta"
+          },
+          "to": {
+            "code": "DPS",
+            "name": "Ngurah Rai International",
+            "city": "Denpasar"
+          }
+        },
+        "schedule": {
+          "departure": "2025-12-15T05:30:00",
+          "departure_timezone": "Asia/Jakarta",
+          "arrival": "2025-12-15T08:15:00",
+          "arrival_timezone": "Asia/Makassar"
+        },
+        "flight_time": 105,
+        "is_direct": true,
+        "pricing": {
+          "total": 950000,
+          "currency": "IDR",
+          "fare_type": "ECONOMY"
+        },
+        "seats_left": 45,
+        "plane_type": "Boeing 737-900ER",
+        "services": {
+          "wifi_available": false,
+          "meals_included": false,
+          "baggage_allowance": {
+            "cabin": "7 kg",
+            "hold": "20 kg"
+          }
+        }
+      },
+      {
+        "id": "JT742",
+        "carrier": {
+          "name": "Lion Air",
+          "iata": "JT"
+        },
+        "route": {
+          "from": {
+            "code": "CGK",
+            "name": "Soekarno-Hatta International",
+            "city": "Jakarta"
+          },
+          "to": {
+            "code": "DPS",
+            "name": "Ngurah Rai International",
+            "city": "Denpasar"
+          }
+        },
+        "schedule": {
+          "departure": "2025-12-15T11:45:00",
+          "departure_timezone": "Asia/Jakarta",
+          "arrival": "2025-12-15T14:35:00",
+          "arrival_timezone": "Asia/Makassar"
+        },
+        "flight_time": 110,
+        "is_direct": true,
+        "pricing": {
+          "total": 890000,
+          "currency": "IDR",
+          "fare_type": "ECONOMY"
+        },
+        "seats_left": 38,
+        "plane_type": "Boeing 737-800",
+        "services": {
+          "wifi_available": false,
+          "meals_included": false,
+          "baggage_allowance": {
+            "cabin": "7 kg",
+            "hold": "20 kg"
+          }
+        }
+      },
+      {
+        "id": "JT650",
+        "carrier": {
+          "name": "Lion Air",
+          "iata": "JT"
+        },
+        "route": {
+          "from": {
+            "code": "CGK",
+            "name": "Soekarno-Hatta International",
+            "city": "Jakarta"
+          },
+          "to": {
+            "code": "DPS",
+            "name": "Ngurah Rai International",
+            "city": "Denpasar"
+          }
+        },
+        "schedule": {
+          "departure": "2025-12-15T16:20:00",
+          "departure_timezone": "Asia/Jakarta",
+          "arrival": "2025-12-15T21:10:00",
+          "arrival_timezone": "Asia/Makassar"
+        },
+        "flight_time": 230,
+        "is_direct": false,
+        "stop_count": 1,
+        "layovers": [
+          {
+            "airport": "SUB",
+            "duration_minutes": 75
+          }
+        ],
+        "pricing": {
+          "total": 780000,
+          "currency": "IDR",
+          "fare_type": "ECONOMY"
+        },
+        "seats_left": 52,
+        "plane_type": "Boeing 737-800",
+        "services": {
+          "wifi_available": false,
+          "meals_included": false,
+          "baggage_allowance": {
+            "cabin": "7 kg",
+            "hold": "20 kg"
+          }
+        }
+      }
+    ]
+  }
+}

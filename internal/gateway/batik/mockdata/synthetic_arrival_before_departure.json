@@ -1,0 +1,30 @@
+{
+  "code": 200,
+  "message": "OK",
+  "results": [
+    {
+      "flightNumber": "ID6400",
+      "airlineName": "Batik Air",
+      "airlineIATA": "ID",
+      "origin": "CGK",
+      "destination": "KNO",
+      "departureDateTime": "2025-12-22T10:00:00+0700",
+      "arrivalDateTime": "2025-12-22T08:00:00+0700",
+      "travelTime": "2h 20m",
+      "numberOfStops": 0,
+      "fare": {
+        "basePrice": 1200000,
+        "taxes": 150000,
+        "totalPrice": 1350000,
+        "currencyCode": "IDR",
+        "class": "Y"
+      },
+      "seatsAvailable": 27,
+      "aircraftModel": "Airbus A320",
+      "baggageInfo": "7kg cabin, 20kg checked",
+      "onboardServices": [
+        "Snack"
+      ]
+    }
+  ]
+}

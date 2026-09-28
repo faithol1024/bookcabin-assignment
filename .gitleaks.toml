@@ -1,0 +1,5 @@
+# Secret scanning config for gitleaks (pre-commit hook, `make secrets`, CI).
+# Extends the built-in rules. Add narrowly scoped allowlist entries here for
+# false positives instead of disabling rules.
+[extend]
+useDefault = true

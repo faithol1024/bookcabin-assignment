@@ -1,0 +1,662 @@
+openapi: 3.1.0
+info:
+  title: BookCabin Flight Search API
+  version: 1.0.0
+  description: |
+    Searches four airline providers in parallel, normalizes their formats and
+    filters, sorts and ranks the results. Prices are whole Indonesian rupiah.
+    Errors use RFC 9457 `application/problem+json`. Every response carries an
+    `X-Request-ID` header (the client's, if valid, else a generated one).
+servers:
+  - url: http://localhost:8080
+
+security: [] # no authentication
+
+paths:
+  /v1/flights/search:
+    post:
+      summary: Search one-way, round-trip or multi-city flights
+      description: |
+        - One-way: `origin`, `destination`, `departureDate`.
+        - Round trip: one-way fields plus `returnDate`; the response has `outbound` and `inbound` legs.
+        - Multi-city: `legs` only (no top-level `origin`/`destination`/`departureDate`/`returnDate`).
+
+        Filters, sort and paging apply to every leg separately. One provider failing never fails
+        the search; 502 is returned only when every provider fails on every leg.
+      operationId: searchFlights
+      parameters:
+        - $ref: "#/components/parameters/RequestID"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SearchRequest"
+            examples:
+              oneWay:
+                summary: One-way
+                value:
+                  origin: CGK
+                  destination: DPS
+                  departureDate: "2025-12-15"
+                  passengers: 1
+                  cabinClass: economy
+              roundTrip:
+                summary: Round trip with filters
+                value:
+                  origin: CGK
+                  destination: DPS
+                  departureDate: "2025-12-15"
+                  returnDate: "2025-12-20"
+                  passengers: 2
+                  cabinClass: economy
+                  filters:
+                    priceMax: 1500000
+                    maxStops: 0
+                    departureTime: { from: "06:00", to: "12:00" }
+                  sort: { by: price, order: asc }
+                  page: { limit: 10, offset: 0 }
+              multiCity:
+                summary: Multi-city
+                value:
+                  legs:
+                    - { origin: CGK, destination: DPS, date: "2025-12-15" }
+                    - { origin: DPS, destination: SUB, date: "2025-12-18" }
+                  passengers: 1
+                  cabinClass: economy
+      responses:
+        "200":
+          description: Search results; the shape depends on the request type.
+          headers:
+            X-Request-ID:
+              $ref: "#/components/headers/RequestID"
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/OneWayResponse"
+                  - $ref: "#/components/schemas/RoundTripResponse"
+                  - $ref: "#/components/schemas/MultiCityResponse"
+        "400":
+          $ref: "#/components/responses/ValidationError"
+        "413":
+          $ref: "#/components/responses/PayloadTooLarge"
+        "500":
+          $ref: "#/components/responses/InternalError"
+        "502":
+          $ref: "#/components/responses/AllProvidersFailed"
+
+  /healthz:
+    get:
+      summary: Liveness
+      operationId: healthz
+      responses:
+        "200":
+          description: The process is up.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [status]
+                properties:
+                  status:
+                    type: string
+                    const: ok
+
+  /docs:
+    get:
+      summary: Interactive API docs (Swagger UI)
+      description: Loads Swagger UI from the jsDelivr CDN and points it at `/openapi.yaml`.
+      operationId: docs
+      responses:
+        "200":
+          description: The Swagger UI page.
+          content:
+            text/html:
+              schema:
+                type: string
+
+  /openapi.yaml:
+    get:
+      summary: This OpenAPI document
+      operationId: openapi
+      responses:
+        "200":
+          description: The OpenAPI 3.1 contract.
+          content:
+            application/yaml:
+              schema:
+                type: string
+
+components:
+  parameters:
+    RequestID:
+      name: X-Request-ID
+      in: header
+      required: false
+      description: Printable ASCII, at most 128 characters; otherwise a new ID is generated.
+      schema:
+        type: string
+        maxLength: 128
+
+  headers:
+    RequestID:
+      description: The request ID used in logs and problem details.
+      schema:
+        type: string
+
+  responses:
+    ValidationError:
+      description: The request is invalid; `errors` lists every problem found.
+      content:
+        application/problem+json:
+          schema:
+            $ref: "#/components/schemas/Problem"
+          example:
+            type: validation_error
+            title: Validation failed
+            status: 400
+            detail: The request is invalid.
+            request_id: 5f2b8c1e9d4a4f7b8e6c3a2d1f0e9b8a
+            errors:
+              - { field: departure_date, message: "unknown field; did you mean \"departureDate\"?" }
+    PayloadTooLarge:
+      description: The request body is over 64 KB.
+      content:
+        application/problem+json:
+          schema:
+            $ref: "#/components/schemas/Problem"
+          example:
+            type: payload_too_large
+            title: Payload too large
+            status: 413
+            detail: The request body is too large.
+            request_id: 5f2b8c1e9d4a4f7b8e6c3a2d1f0e9b8a
+    InternalError:
+      description: Unexpected error or recovered panic; details are only logged.
+      content:
+        application/problem+json:
+          schema:
+            $ref: "#/components/schemas/Problem"
+          example:
+            type: internal_error
+            title: Internal server error
+            status: 500
+            detail: An unexpected error occurred.
+            request_id: 5f2b8c1e9d4a4f7b8e6c3a2d1f0e9b8a
+    AllProvidersFailed:
+      description: Every provider failed or timed out (for multi-leg searches, on every leg).
+      content:
+        application/problem+json:
+          schema:
+            $ref: "#/components/schemas/Problem"
+          example:
+            type: all_providers_failed
+            title: All providers failed
+            status: 502
+            detail: Every provider failed or timed out.
+            request_id: 5f2b8c1e9d4a4f7b8e6c3a2d1f0e9b8a
+
+  schemas:
+    IATAAirport:
+      type: string
+      pattern: "^[A-Z]{3}$"
+      examples: [CGK]
+
+    Date:
+      type: string
+      format: date
+      description: YYYY-MM-DD. Past dates are allowed.
+
+    Clock:
+      type: string
+      pattern: "^([01][0-9]|2[0-3]):[0-5][0-9]$"
+      examples: ["06:00"]
+
+    Cabin:
+      type: string
+      enum: [economy, business, first]
+
+    SearchRequest:
+      type: object
+      additionalProperties: false
+      description: |
+        Unknown fields are rejected; a snake_case key gets a camelCase suggestion.
+        The body must be a single JSON object of at most 64 KB.
+      required: [passengers, cabinClass]
+      properties:
+        origin:
+          $ref: "#/components/schemas/IATAAirport"
+        destination:
+          description: Must differ from origin.
+          $ref: "#/components/schemas/IATAAirport"
+        departureDate:
+          $ref: "#/components/schemas/Date"
+        returnDate:
+          description: Makes the search a round trip; must not be before departureDate.
+          oneOf:
+            - $ref: "#/components/schemas/Date"
+            - type: "null"
+        legs:
+          description: Multi-city; 2 to 5 legs (`flight_search.api.legs`), dates non-decreasing.
+          oneOf:
+            - type: array
+              minItems: 2
+              maxItems: 5
+              items:
+                $ref: "#/components/schemas/LegQuery"
+            - type: "null"
+        passengers:
+          type: integer
+          minimum: 1
+          maximum: 9
+          description: Bounds from `flight_search.api.passengers`.
+        cabinClass:
+          $ref: "#/components/schemas/Cabin"
+        filters:
+          $ref: "#/components/schemas/Filters"
+        sort:
+          $ref: "#/components/schemas/Sort"
+        page:
+          $ref: "#/components/schemas/Page"
+
+    LegQuery:
+      type: object
+      additionalProperties: false
+      required: [origin, destination, date]
+      properties:
+        origin:
+          $ref: "#/components/schemas/IATAAirport"
+        destination:
+          $ref: "#/components/schemas/IATAAirport"
+        date:
+          $ref: "#/components/schemas/Date"
+
+    Filters:
+      type: object
+      additionalProperties: false
+      description: Every filter is optional and applies to each leg.
+      properties:
+        priceMin:
+          type: integer
+          format: int64
+          minimum: 0
+          description: Per-passenger IDR, inclusive; must not exceed priceMax.
+        priceMax:
+          type: integer
+          format: int64
+          minimum: 0
+          description: Per-passenger IDR, inclusive.
+        maxStops:
+          type: integer
+          minimum: 0
+        departureTime:
+          $ref: "#/components/schemas/TimeWindow"
+        arrivalTime:
+          $ref: "#/components/schemas/TimeWindow"
+        airlines:
+          type: array
+          description: IATA airline codes, e.g. GA, JT, ID, QZ.
+          items:
+            type: string
+            pattern: "^[A-Z0-9]{2}$"
+        maxDurationMinutes:
+          type: integer
+          minimum: 0
+
+    TimeWindow:
+      type: object
+      additionalProperties: false
+      description: Local time at the relevant airport, inclusive; wraps past midnight when from > to (22:00–02:00).
+      required: [from, to]
+      properties:
+        from:
+          $ref: "#/components/schemas/Clock"
+        to:
+          $ref: "#/components/schemas/Clock"
+
+    Sort:
+      type: object
+      additionalProperties: false
+      description: Flight ID breaks ties. Omitted fields default to best_value asc.
+      properties:
+        by:
+          type: string
+          enum: [best_value, price, duration, departure, arrival]
+          default: best_value
+        order:
+          type: string
+          enum: [asc, desc]
+          default: asc
+
+    Page:
+      type: object
+      additionalProperties: false
+      description: An offset past the end returns an empty page.
+      properties:
+        limit:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 20
+          description: Default and maximum from `flight_search.api.page`.
+        offset:
+          type: integer
+          minimum: 0
+          default: 0
+
+    SearchCriteria:
+      type: object
+      description: Echo of the validated request; only the fields that apply are present.
+      required: [passengers, cabin_class]
+      properties:
+        origin:
+          type: string
+        destination:
+          type: string
+        departure_date:
+          type: string
+          format: date
+        return_date:
+          type: string
+          format: date
+        legs:
+          type: array
+          items:
+            type: object
+            required: [origin, destination, date]
+            properties:
+              origin: { type: string }
+              destination: { type: string }
+              date: { type: string, format: date }
+        passengers:
+          type: integer
+        cabin_class:
+          $ref: "#/components/schemas/Cabin"
+
+    OneWayResponse:
+      type: object
+      required: [search_criteria, metadata, flights]
+      properties:
+        search_criteria:
+          $ref: "#/components/schemas/SearchCriteria"
+        metadata:
+          $ref: "#/components/schemas/Metadata"
+        flights:
+          type: array
+          items:
+            $ref: "#/components/schemas/Flight"
+
+    RoundTripResponse:
+      type: object
+      required: [search_criteria, outbound, inbound]
+      properties:
+        search_criteria:
+          $ref: "#/components/schemas/SearchCriteria"
+        outbound:
+          $ref: "#/components/schemas/Leg"
+        inbound:
+          $ref: "#/components/schemas/Leg"
+
+    MultiCityResponse:
+      type: object
+      required: [search_criteria, legs]
+      properties:
+        search_criteria:
+          $ref: "#/components/schemas/SearchCriteria"
+        legs:
+          type: array
+          items:
+            $ref: "#/components/schemas/Leg"
+
+    Leg:
+      type: object
+      required: [origin, destination, date, metadata, flights]
+      properties:
+        origin:
+          type: string
+        destination:
+          type: string
+        date:
+          type: string
+          format: date
+        metadata:
+          $ref: "#/components/schemas/Metadata"
+        flights:
+          type: array
+          items:
+            $ref: "#/components/schemas/Flight"
+
+    Metadata:
+      type: object
+      required:
+        - total_results
+        - limit
+        - offset
+        - providers_queried
+        - providers_succeeded
+        - providers_failed
+        - flights_rejected
+        - cheapest_by_provider
+        - search_time_ms
+        - cache_hit
+        - provider_errors
+      properties:
+        total_results:
+          type: integer
+          description: Flights after filters, before paging.
+        limit:
+          type: integer
+        offset:
+          type: integer
+        providers_queried:
+          type: integer
+        providers_succeeded:
+          type: integer
+        providers_failed:
+          type: integer
+        flights_rejected:
+          type: integer
+          description: Provider records dropped as invalid (bad times, price, cabin or currency).
+        cheapest_by_provider:
+          type: object
+          description: Lowest per-passenger IDR fare per provider among the filtered flights.
+          additionalProperties:
+            type: integer
+            format: int64
+          examples: [{ "Lion Air": 780000, "AirAsia": 485000 }]
+        search_time_ms:
+          type: integer
+        cache_hit:
+          type: boolean
+          description: True only if every provider for the leg answered from cache.
+        provider_errors:
+          type: array
+          items:
+            $ref: "#/components/schemas/ProviderError"
+
+    ProviderError:
+      type: object
+      required: [provider, error, attempts]
+      properties:
+        provider:
+          type: string
+        error:
+          type: string
+          enum: [upstream_unavailable, rate_limited, malformed_response, timeout]
+        attempts:
+          type: integer
+          description: HTTP attempts made (0 when rejected before any request, e.g. an open breaker).
+
+    Flight:
+      type: object
+      required:
+        - id
+        - provider
+        - airline
+        - flight_number
+        - departure
+        - arrival
+        - duration
+        - stops
+        - layovers
+        - price
+        - available_seats
+        - cabin_class
+        - aircraft
+        - amenities
+        - baggage
+        - score
+        - warnings
+      properties:
+        id:
+          type: string
+          description: "{flight_number}_{provider without spaces}, unique within a leg."
+          examples: [QZ7250_AirAsia]
+        provider:
+          type: string
+        airline:
+          type: object
+          required: [name, code]
+          properties:
+            name: { type: string }
+            code: { type: string, examples: [QZ] }
+        flight_number:
+          type: string
+        departure:
+          $ref: "#/components/schemas/Endpoint"
+        arrival:
+          $ref: "#/components/schemas/Endpoint"
+        duration:
+          type: object
+          required: [total_minutes, formatted]
+          properties:
+            total_minutes:
+              type: integer
+              description: Arrival instant minus departure instant, layovers included.
+            formatted:
+              type: string
+              examples: ["4h 20m"]
+        stops:
+          type: integer
+        layovers:
+          type: array
+          items:
+            type: object
+            required: [airport, duration_minutes]
+            properties:
+              airport: { type: string }
+              duration_minutes: { type: integer }
+        price:
+          $ref: "#/components/schemas/Price"
+        available_seats:
+          type: integer
+        cabin_class:
+          $ref: "#/components/schemas/Cabin"
+        aircraft:
+          type: ["string", "null"]
+        amenities:
+          type: array
+          items:
+            type: string
+        baggage:
+          type: object
+          required: [carry_on, checked]
+          properties:
+            carry_on: { type: string, examples: ["7 kg"] }
+            checked: { type: string, examples: ["20 kg"] }
+        score:
+          type: number
+          description: Best-value score within the leg, lower is better, 4 decimals.
+        warnings:
+          type: array
+          items:
+            type: string
+            enum: [duration_mismatch, segment_inconsistent, airport_unknown, baggage_unparsed]
+
+    Endpoint:
+      type: object
+      required: [airport, city, datetime, timestamp]
+      properties:
+        airport:
+          type: string
+        city:
+          type: ["string", "null"]
+          description: Null for an airport missing from the city table (warning airport_unknown).
+        datetime:
+          type: string
+          format: date-time
+          description: Local time with the airport's offset.
+          examples: ["2025-12-15T15:15:00+07:00"]
+        timestamp:
+          type: integer
+          format: int64
+          description: Unix seconds.
+
+    Price:
+      type: object
+      required: [amount, currency, formatted, total, total_formatted, original]
+      properties:
+        amount:
+          type: integer
+          format: int64
+          description: Per passenger, whole IDR.
+        currency:
+          type: string
+          const: IDR
+        formatted:
+          type: string
+          examples: ["Rp 485.000"]
+        total:
+          type: integer
+          format: int64
+          description: amount × passengers.
+        total_formatted:
+          type: string
+        original:
+          description: The provider's fare when it was not in IDR.
+          oneOf:
+            - type: object
+              required: [amount, currency, rate]
+              properties:
+                amount:
+                  type: string
+                  examples: ["65.50"]
+                currency:
+                  type: string
+                  examples: [USD]
+                rate:
+                  type: integer
+                  format: int64
+                  description: IDR per one unit.
+                  examples: [16250]
+            - type: "null"
+
+    Problem:
+      type: object
+      description: RFC 9457 problem details.
+      required: [type, title, status, detail]
+      properties:
+        type:
+          type: string
+          enum: [validation_error, payload_too_large, internal_error, all_providers_failed]
+        title:
+          type: string
+        status:
+          type: integer
+        detail:
+          type: string
+        request_id:
+          type: string
+        errors:
+          type: array
+          description: Present for validation_error when field problems were found.
+          items:
+            type: object
+            required: [field, message]
+            properties:
+              field:
+                type: string
+                examples: [filters.priceMin]
+              message:
+                type: string

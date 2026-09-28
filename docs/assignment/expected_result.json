@@ -1,0 +1,57 @@
+{
+  "search_criteria": {
+    "origin": "CGK",
+    "destination": "DPS",
+    "departure_date": "2025-12-15",
+    "passengers": 1,
+    "cabin_class": "economy"
+  },
+  "metadata": {
+    "total_results": 15,
+    "providers_queried": 4,
+    "providers_succeeded": 4,
+    "providers_failed": 0,
+    "search_time_ms": 285,
+    "cache_hit": false
+  },
+  "flights": [
+    {
+      "id": "QZ7250_AirAsia",
+      "provider": "AirAsia",
+      "airline": {
+        "name": "AirAsia",
+        "code": "QZ"
+      },
+      "flight_number": "QZ7250",
+      "departure": {
+        "airport": "CGK",
+        "city": "Jakarta",
+        "datetime": "2025-12-15T15:15:00+07:00",
+        "timestamp": 1734246900
+      },
+      "arrival": {
+        "airport": "DPS",
+        "city": "Denpasar",
+        "datetime": "2025-12-15T20:35:00+08:00",
+        "timestamp": 1734267300
+      },
+      "duration": {
+        "total_minutes": 260,
+        "formatted": "4h 20m"
+      },
+      "stops": 1,
+      "price": {
+        "amount": 485000,
+        "currency": "IDR"
+      },
+      "available_seats": 88,
+      "cabin_class": "economy",
+      "aircraft": null,
+      "amenities": [],
+      "baggage": {
+        "carry_on": "Cabin baggage only",
+        "checked": "Additional fee"
+      }
+    }
+  ]
+}

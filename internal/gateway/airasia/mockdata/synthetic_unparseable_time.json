@@ -1,0 +1,19 @@
+{
+  "status": "ok",
+  "flights": [
+    {
+      "flight_code": "QZ7900",
+      "airline": "AirAsia",
+      "from_airport": "CGK",
+      "to_airport": "BPN",
+      "depart_time": "2025-12-22T09:00:00+07:00",
+      "arrive_time": "2025-12-22 12:05 WITA",
+      "duration_hours": 2.08,
+      "direct_flight": true,
+      "price_idr": 810000,
+      "seats": 64,
+      "cabin_class": "economy",
+      "baggage_note": "Cabin baggage only, checked bags additional fee"
+    }
+  ]
+}

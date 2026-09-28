@@ -1,0 +1,30 @@
+{
+  "code": 200,
+  "message": "OK",
+  "results": [
+    {
+      "flightNumber": "ID6580",
+      "airlineName": "Batik Air",
+      "airlineIATA": "ID",
+      "origin": "CGK",
+      "destination": "SUB",
+      "departureDateTime": "2025-12-21T13:00:00+0700",
+      "arrivalDateTime": "2025-12-21T14:30:00+0700",
+      "travelTime": "1h 30m",
+      "numberOfStops": 0,
+      "fare": {
+        "basePrice": 800000,
+        "taxes": 100000,
+        "totalPrice": 900000,
+        "currencyCode": "IDR",
+        "class": "Y"
+      },
+      "seatsAvailable": 31,
+      "aircraftModel": "Airbus A320",
+      "baggageInfo": "7kg cabin, 20kg checked",
+      "onboardServices": [
+        "Snack"
+      ]
+    }
+  ]
+}

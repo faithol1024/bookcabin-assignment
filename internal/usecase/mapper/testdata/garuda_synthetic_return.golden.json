@@ -1,0 +1,43 @@
+{
+  "Flights": [
+    {
+      "ID": "GA401_GarudaIndonesia",
+      "Provider": "Garuda Indonesia",
+      "Airline": {
+        "Name": "Garuda Indonesia",
+        "Code": "GA"
+      },
+      "FlightNumber": "GA401",
+      "Departure": {
+        "Code": "DPS",
+        "City": "Denpasar",
+        "Time": "2025-12-18T09:00:00+08:00"
+      },
+      "Arrival": {
+        "Code": "CGK",
+        "City": "Jakarta",
+        "Time": "2025-12-18T09:50:00+07:00"
+      },
+      "Layovers": null,
+      "Fare": {
+        "Amount": "1300000",
+        "Currency": "IDR"
+      },
+      "Price": 0,
+      "Original": null,
+      "AvailableSeats": 30,
+      "Cabin": "economy",
+      "Aircraft": "Boeing 737-800",
+      "Amenities": [
+        "wifi",
+        "meal"
+      ],
+      "Baggage": {
+        "CarryOn": "1 piece",
+        "Checked": "2 pieces"
+      },
+      "Warnings": null
+    }
+  ],
+  "Rejected": 0
+}

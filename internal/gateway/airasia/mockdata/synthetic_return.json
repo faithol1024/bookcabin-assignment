@@ -1,0 +1,19 @@
+{
+  "status": "ok",
+  "flights": [
+    {
+      "flight_code": "QZ7511",
+      "airline": "AirAsia",
+      "from_airport": "DPS",
+      "to_airport": "CGK",
+      "depart_time": "2025-12-18T16:00:00+08:00",
+      "arrive_time": "2025-12-18T16:50:00+07:00",
+      "duration_hours": 1.83,
+      "direct_flight": true,
+      "price_idr": 690000,
+      "seats": 72,
+      "cabin_class": "economy",
+      "baggage_note": "Cabin baggage only, checked bags additional fee"
+    }
+  ]
+}

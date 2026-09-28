@@ -1,0 +1,42 @@
+{
+  "Flights": [
+    {
+      "ID": "QZ7650_AirAsia",
+      "Provider": "AirAsia",
+      "Airline": {
+        "Name": "AirAsia",
+        "Code": "QZ"
+      },
+      "FlightNumber": "QZ7650",
+      "Departure": {
+        "Code": "CGK",
+        "City": null,
+        "Time": "2025-12-22T12:00:00+07:00"
+      },
+      "Arrival": {
+        "Code": "LOP",
+        "City": null,
+        "Time": "2025-12-22T14:55:00+08:00"
+      },
+      "Layovers": null,
+      "Fare": {
+        "Amount": "760000",
+        "Currency": "IDR"
+      },
+      "Price": 0,
+      "Original": null,
+      "AvailableSeats": 58,
+      "Cabin": "economy",
+      "Aircraft": null,
+      "Amenities": null,
+      "Baggage": {
+        "CarryOn": "20kg checked included, priority boarding",
+        "Checked": "20kg checked included, priority boarding"
+      },
+      "Warnings": [
+        "baggage_unparsed"
+      ]
+    }
+  ],
+  "Rejected": 0
+}

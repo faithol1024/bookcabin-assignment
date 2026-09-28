@@ -1,0 +1,40 @@
+{
+  "Flights": [
+    {
+      "ID": "JT790_LionAir",
+      "Provider": "Lion Air",
+      "Airline": {
+        "Name": "Lion Air",
+        "Code": "JT"
+      },
+      "FlightNumber": "JT790",
+      "Departure": {
+        "Code": "CGK",
+        "City": "Jakarta",
+        "Time": "2025-12-20T23:30:00+07:00"
+      },
+      "Arrival": {
+        "Code": "UPG",
+        "City": "Makassar",
+        "Time": "2025-12-21T02:10:00+08:00"
+      },
+      "Layovers": null,
+      "Fare": {
+        "Amount": "1050000",
+        "Currency": "IDR"
+      },
+      "Price": 0,
+      "Original": null,
+      "AvailableSeats": 70,
+      "Cabin": "economy",
+      "Aircraft": "Boeing 737-900ER",
+      "Amenities": null,
+      "Baggage": {
+        "CarryOn": "7 kg",
+        "Checked": "20 kg"
+      },
+      "Warnings": null
+    }
+  ],
+  "Rejected": 0
+}

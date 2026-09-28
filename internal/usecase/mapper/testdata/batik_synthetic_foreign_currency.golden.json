@@ -1,0 +1,42 @@
+{
+  "Flights": [
+    {
+      "ID": "ID6520_BatikAir",
+      "Provider": "Batik Air",
+      "Airline": {
+        "Name": "Batik Air",
+        "Code": "ID"
+      },
+      "FlightNumber": "ID6520",
+      "Departure": {
+        "Code": "CGK",
+        "City": null,
+        "Time": "2025-12-24T10:00:00+07:00"
+      },
+      "Arrival": {
+        "Code": "DPS",
+        "City": null,
+        "Time": "2025-12-24T12:55:00+08:00"
+      },
+      "Layovers": null,
+      "Fare": {
+        "Amount": "89.90",
+        "Currency": "SGD"
+      },
+      "Price": 0,
+      "Original": null,
+      "AvailableSeats": 25,
+      "Cabin": "economy",
+      "Aircraft": "Airbus A320",
+      "Amenities": [
+        "snack"
+      ],
+      "Baggage": {
+        "CarryOn": "7kg",
+        "Checked": "20kg"
+      },
+      "Warnings": null
+    }
+  ],
+  "Rejected": 0
+}

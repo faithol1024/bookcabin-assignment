@@ -1,0 +1,43 @@
+{
+  "Flights": [
+    {
+      "ID": "GA410_GarudaIndonesia",
+      "Provider": "Garuda Indonesia",
+      "Airline": {
+        "Name": "Garuda Indonesia",
+        "Code": "GA"
+      },
+      "FlightNumber": "GA410",
+      "Departure": {
+        "Code": "CGK",
+        "City": "Jakarta",
+        "Time": "2025-12-24T07:00:00+07:00"
+      },
+      "Arrival": {
+        "Code": "DPS",
+        "City": "Denpasar",
+        "Time": "2025-12-24T09:50:00+08:00"
+      },
+      "Layovers": null,
+      "Fare": {
+        "Amount": "65.50",
+        "Currency": "USD"
+      },
+      "Price": 0,
+      "Original": null,
+      "AvailableSeats": 30,
+      "Cabin": "economy",
+      "Aircraft": "Boeing 737-800",
+      "Amenities": [
+        "wifi",
+        "meal"
+      ],
+      "Baggage": {
+        "CarryOn": "1 piece",
+        "Checked": "2 pieces"
+      },
+      "Warnings": null
+    }
+  ],
+  "Rejected": 0
+}

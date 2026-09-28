@@ -1,0 +1,115 @@
+{
+  "Flights": [
+    {
+      "ID": "JT740_LionAir",
+      "Provider": "Lion Air",
+      "Airline": {
+        "Name": "Lion Air",
+        "Code": "JT"
+      },
+      "FlightNumber": "JT740",
+      "Departure": {
+        "Code": "CGK",
+        "City": "Jakarta",
+        "Time": "2025-12-15T05:30:00+07:00"
+      },
+      "Arrival": {
+        "Code": "DPS",
+        "City": "Denpasar",
+        "Time": "2025-12-15T08:15:00+08:00"
+      },
+      "Layovers": null,
+      "Fare": {
+        "Amount": "950000",
+        "Currency": "IDR"
+      },
+      "Price": 0,
+      "Original": null,
+      "AvailableSeats": 45,
+      "Cabin": "economy",
+      "Aircraft": "Boeing 737-900ER",
+      "Amenities": null,
+      "Baggage": {
+        "CarryOn": "7 kg",
+        "Checked": "20 kg"
+      },
+      "Warnings": null
+    },
+    {
+      "ID": "JT742_LionAir",
+      "Provider": "Lion Air",
+      "Airline": {
+        "Name": "Lion Air",
+        "Code": "JT"
+      },
+      "FlightNumber": "JT742",
+      "Departure": {
+        "Code": "CGK",
+        "City": "Jakarta",
+        "Time": "2025-12-15T11:45:00+07:00"
+      },
+      "Arrival": {
+        "Code": "DPS",
+        "City": "Denpasar",
+        "Time": "2025-12-15T14:35:00+08:00"
+      },
+      "Layovers": null,
+      "Fare": {
+        "Amount": "890000",
+        "Currency": "IDR"
+      },
+      "Price": 0,
+      "Original": null,
+      "AvailableSeats": 38,
+      "Cabin": "economy",
+      "Aircraft": "Boeing 737-800",
+      "Amenities": null,
+      "Baggage": {
+        "CarryOn": "7 kg",
+        "Checked": "20 kg"
+      },
+      "Warnings": null
+    },
+    {
+      "ID": "JT650_LionAir",
+      "Provider": "Lion Air",
+      "Airline": {
+        "Name": "Lion Air",
+        "Code": "JT"
+      },
+      "FlightNumber": "JT650",
+      "Departure": {
+        "Code": "CGK",
+        "City": "Jakarta",
+        "Time": "2025-12-15T16:20:00+07:00"
+      },
+      "Arrival": {
+        "Code": "DPS",
+        "City": "Denpasar",
+        "Time": "2025-12-15T21:10:00+08:00"
+      },
+      "Layovers": [
+        {
+          "Airport": "SUB",
+          "Duration": 4500000000000
+        }
+      ],
+      "Fare": {
+        "Amount": "780000",
+        "Currency": "IDR"
+      },
+      "Price": 0,
+      "Original": null,
+      "AvailableSeats": 52,
+      "Cabin": "economy",
+      "Aircraft": "Boeing 737-800",
+      "Amenities": null,
+      "Baggage": {
+        "CarryOn": "7 kg",
+        "Checked": "20 kg"
+      },
+      "Warnings": null
+    }
+  ],
+  "Rejected": 0
+}

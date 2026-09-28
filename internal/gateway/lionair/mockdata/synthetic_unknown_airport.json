@@ -1,0 +1,55 @@
+{
+  "success": true,
+  "data": {
+    "available_flights": [
+      {
+        "id": "JT798",
+        "carrier": {
+          "name": "Lion Air",
+          "iata": "JT"
+        },
+        "route": {
+          "from": {
+            "code": "CGK",
+            "name": "Soekarno-Hatta International",
+            "city": "Jakarta"
+          },
+          "to": {
+            "code": "TTE",
+            "name": "Sultan Babullah"
+          }
+        },
+        "schedule": {
+          "departure": "2025-12-22T06:00:00",
+          "departure_timezone": "Asia/Jakarta",
+          "arrival": "2025-12-22T12:30:00",
+          "arrival_timezone": "Asia/Jayapura"
+        },
+        "flight_time": 270,
+        "is_direct": false,
+        "stop_count": 1,
+        "layovers": [
+          {
+            "airport": "UPG",
+            "duration_minutes": 60
+          }
+        ],
+        "pricing": {
+          "total": 2150000,
+          "currency": "IDR",
+          "fare_type": "ECONOMY"
+        },
+        "seats_left": 33,
+        "plane_type": "Boeing 737-900ER",
+        "services": {
+          "wifi_available": false,
+          "meals_included": false,
+          "baggage_allowance": {
+            "cabin": "7 kg",
+            "hold": "20 kg"
+          }
+        }
+      }
+    ]
+  }
+}

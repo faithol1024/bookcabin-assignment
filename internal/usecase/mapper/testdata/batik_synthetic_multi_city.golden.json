@@ -1,0 +1,43 @@
+{
+  "Flights": [
+    {
+      "ID": "ID6601_BatikAir",
+      "Provider": "Batik Air",
+      "Airline": {
+        "Name": "Batik Air",
+        "Code": "ID"
+      },
+      "FlightNumber": "ID6601",
+      "Departure": {
+        "Code": "SUB",
+        "City": null,
+        "Time": "2025-12-19T15:00:00+07:00"
+      },
+      "Arrival": {
+        "Code": "CGK",
+        "City": null,
+        "Time": "2025-12-19T16:30:00+07:00"
+      },
+      "Layovers": null,
+      "Fare": {
+        "Amount": "920000",
+        "Currency": "IDR"
+      },
+      "Price": 0,
+      "Original": null,
+      "AvailableSeats": 35,
+      "Cabin": "economy",
+      "Aircraft": "Airbus A320",
+      "Amenities": [
+        "snack",
+        "beverage"
+      ],
+      "Baggage": {
+        "CarryOn": "7kg",
+        "Checked": "20kg"
+      },
+      "Warnings": null
+    }
+  ],
+  "Rejected": 0
+}

@@ -1,0 +1,150 @@
+{
+  "Flights": [
+    {
+      "ID": "QZ520_AirAsia",
+      "Provider": "AirAsia",
+      "Airline": {
+        "Name": "AirAsia",
+        "Code": "QZ"
+      },
+      "FlightNumber": "QZ520",
+      "Departure": {
+        "Code": "CGK",
+        "City": null,
+        "Time": "2025-12-15T04:45:00+07:00"
+      },
+      "Arrival": {
+        "Code": "DPS",
+        "City": null,
+        "Time": "2025-12-15T07:25:00+08:00"
+      },
+      "Layovers": null,
+      "Fare": {
+        "Amount": "650000",
+        "Currency": "IDR"
+      },
+      "Price": 0,
+      "Original": null,
+      "AvailableSeats": 67,
+      "Cabin": "economy",
+      "Aircraft": null,
+      "Amenities": null,
+      "Baggage": {
+        "CarryOn": "Cabin baggage only",
+        "Checked": "Additional fee"
+      },
+      "Warnings": null
+    },
+    {
+      "ID": "QZ524_AirAsia",
+      "Provider": "AirAsia",
+      "Airline": {
+        "Name": "AirAsia",
+        "Code": "QZ"
+      },
+      "FlightNumber": "QZ524",
+      "Departure": {
+        "Code": "CGK",
+        "City": null,
+        "Time": "2025-12-15T10:00:00+07:00"
+      },
+      "Arrival": {
+        "Code": "DPS",
+        "City": null,
+        "Time": "2025-12-15T12:45:00+08:00"
+      },
+      "Layovers": null,
+      "Fare": {
+        "Amount": "720000",
+        "Currency": "IDR"
+      },
+      "Price": 0,
+      "Original": null,
+      "AvailableSeats": 54,
+      "Cabin": "economy",
+      "Aircraft": null,
+      "Amenities": null,
+      "Baggage": {
+        "CarryOn": "Cabin baggage only",
+        "Checked": "Additional fee"
+      },
+      "Warnings": null
+    },
+    {
+      "ID": "QZ532_AirAsia",
+      "Provider": "AirAsia",
+      "Airline": {
+        "Name": "AirAsia",
+        "Code": "QZ"
+      },
+      "FlightNumber": "QZ532",
+      "Departure": {
+        "Code": "CGK",
+        "City": null,
+        "Time": "2025-12-15T19:30:00+07:00"
+      },
+      "Arrival": {
+        "Code": "DPS",
+        "City": null,
+        "Time": "2025-12-15T22:10:00+08:00"
+      },
+      "Layovers": null,
+      "Fare": {
+        "Amount": "595000",
+        "Currency": "IDR"
+      },
+      "Price": 0,
+      "Original": null,
+      "AvailableSeats": 72,
+      "Cabin": "economy",
+      "Aircraft": null,
+      "Amenities": null,
+      "Baggage": {
+        "CarryOn": "Cabin baggage only",
+        "Checked": "Additional fee"
+      },
+      "Warnings": null
+    },
+    {
+      "ID": "QZ7250_AirAsia",
+      "Provider": "AirAsia",
+      "Airline": {
+        "Name": "AirAsia",
+        "Code": "QZ"
+      },
+      "FlightNumber": "QZ7250",
+      "Departure": {
+        "Code": "CGK",
+        "City": null,
+        "Time": "2025-12-15T15:15:00+07:00"
+      },
+      "Arrival": {
+        "Code": "DPS",
+        "City": null,
+        "Time": "2025-12-15T20:35:00+08:00"
+      },
+      "Layovers": [
+        {
+          "Airport": "SOC",
+          "Duration": 5700000000000
+        }
+      ],
+      "Fare": {
+        "Amount": "485000",
+        "Currency": "IDR"
+      },
+      "Price": 0,
+      "Original": null,
+      "AvailableSeats": 88,
+      "Cabin": "economy",
+      "Aircraft": null,
+      "Amenities": null,
+      "Baggage": {
+        "CarryOn": "Cabin baggage only",
+        "Checked": "Additional fee"
+      },
+      "Warnings": null
+    }
+  ],
+  "Rejected": 0
+}

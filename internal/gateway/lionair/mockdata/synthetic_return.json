@@ -1,0 +1,49 @@
+{
+  "success": true,
+  "data": {
+    "available_flights": [
+      {
+        "id": "JT31",
+        "carrier": {
+          "name": "Lion Air",
+          "iata": "JT"
+        },
+        "route": {
+          "from": {
+            "code": "DPS",
+            "name": "Ngurah Rai International",
+            "city": "Denpasar"
+          },
+          "to": {
+            "code": "CGK",
+            "name": "Soekarno-Hatta International",
+            "city": "Jakarta"
+          }
+        },
+        "schedule": {
+          "departure": "2025-12-18T14:00:00",
+          "departure_timezone": "Asia/Makassar",
+          "arrival": "2025-12-18T14:55:00",
+          "arrival_timezone": "Asia/Jakarta"
+        },
+        "flight_time": 115,
+        "is_direct": true,
+        "pricing": {
+          "total": 820000,
+          "currency": "IDR",
+          "fare_type": "ECONOMY"
+        },
+        "seats_left": 60,
+        "plane_type": "Boeing 737-900ER",
+        "services": {
+          "wifi_available": false,
+          "meals_included": false,
+          "baggage_allowance": {
+            "cabin": "7 kg",
+            "hold": "20 kg"
+          }
+        }
+      }
+    ]
+  }
+}

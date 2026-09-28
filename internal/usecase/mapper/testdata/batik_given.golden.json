@@ -1,0 +1,126 @@
+{
+  "Flights": [
+    {
+      "ID": "ID6514_BatikAir",
+      "Provider": "Batik Air",
+      "Airline": {
+        "Name": "Batik Air",
+        "Code": "ID"
+      },
+      "FlightNumber": "ID6514",
+      "Departure": {
+        "Code": "CGK",
+        "City": null,
+        "Time": "2025-12-15T07:15:00+07:00"
+      },
+      "Arrival": {
+        "Code": "DPS",
+        "City": null,
+        "Time": "2025-12-15T10:00:00+08:00"
+      },
+      "Layovers": null,
+      "Fare": {
+        "Amount": "1100000",
+        "Currency": "IDR"
+      },
+      "Price": 0,
+      "Original": null,
+      "AvailableSeats": 32,
+      "Cabin": "economy",
+      "Aircraft": "Airbus A320",
+      "Amenities": [
+        "snack",
+        "beverage"
+      ],
+      "Baggage": {
+        "CarryOn": "7kg",
+        "Checked": "20kg"
+      },
+      "Warnings": null
+    },
+    {
+      "ID": "ID6520_BatikAir",
+      "Provider": "Batik Air",
+      "Airline": {
+        "Name": "Batik Air",
+        "Code": "ID"
+      },
+      "FlightNumber": "ID6520",
+      "Departure": {
+        "Code": "CGK",
+        "City": null,
+        "Time": "2025-12-15T13:30:00+07:00"
+      },
+      "Arrival": {
+        "Code": "DPS",
+        "City": null,
+        "Time": "2025-12-15T16:20:00+08:00"
+      },
+      "Layovers": null,
+      "Fare": {
+        "Amount": "1180000",
+        "Currency": "IDR"
+      },
+      "Price": 0,
+      "Original": null,
+      "AvailableSeats": 18,
+      "Cabin": "economy",
+      "Aircraft": "Boeing 737-800",
+      "Amenities": [
+        "meal",
+        "beverage",
+        "entertainment"
+      ],
+      "Baggage": {
+        "CarryOn": "7kg",
+        "Checked": "20kg"
+      },
+      "Warnings": null
+    },
+    {
+      "ID": "ID7042_BatikAir",
+      "Provider": "Batik Air",
+      "Airline": {
+        "Name": "Batik Air",
+        "Code": "ID"
+      },
+      "FlightNumber": "ID7042",
+      "Departure": {
+        "Code": "CGK",
+        "City": null,
+        "Time": "2025-12-15T18:45:00+07:00"
+      },
+      "Arrival": {
+        "Code": "DPS",
+        "City": null,
+        "Time": "2025-12-15T23:50:00+08:00"
+      },
+      "Layovers": [
+        {
+          "Airport": "UPG",
+          "Duration": 3300000000000
+        }
+      ],
+      "Fare": {
+        "Amount": "950000",
+        "Currency": "IDR"
+      },
+      "Price": 0,
+      "Original": null,
+      "AvailableSeats": 41,
+      "Cabin": "economy",
+      "Aircraft": "Airbus A320",
+      "Amenities": [
+        "snack"
+      ],
+      "Baggage": {
+        "CarryOn": "7kg",
+        "Checked": "20kg"
+      },
+      "Warnings": [
+        "duration_mismatch"
+      ]
+    }
+  ],
+  "Rejected": 0
+}

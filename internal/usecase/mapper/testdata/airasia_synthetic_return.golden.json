@@ -1,0 +1,40 @@
+{
+  "Flights": [
+    {
+      "ID": "QZ7511_AirAsia",
+      "Provider": "AirAsia",
+      "Airline": {
+        "Name": "AirAsia",
+        "Code": "QZ"
+      },
+      "FlightNumber": "QZ7511",
+      "Departure": {
+        "Code": "DPS",
+        "City": null,
+        "Time": "2025-12-18T16:00:00+08:00"
+      },
+      "Arrival": {
+        "Code": "CGK",
+        "City": null,
+        "Time": "2025-12-18T16:50:00+07:00"
+      },
+      "Layovers": null,
+      "Fare": {
+        "Amount": "690000",
+        "Currency": "IDR"
+      },
+      "Price": 0,
+      "Original": null,
+      "AvailableSeats": 72,
+      "Cabin": "economy",
+      "Aircraft": null,
+      "Amenities": null,
+      "Baggage": {
+        "CarryOn": "Cabin baggage only",
+        "Checked": "Additional fee"
+      },
+      "Warnings": null
+    }
+  ],
+  "Rejected": 0
+}

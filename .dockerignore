@@ -1,0 +1,10 @@
+*
+!go.mod
+!go.sum
+!api/
+!cmd/
+!internal/
+!pkg/
+!files/
+**/*_test.go
+**/testdata/

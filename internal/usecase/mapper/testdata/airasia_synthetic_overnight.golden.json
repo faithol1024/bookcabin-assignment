@@ -1,0 +1,40 @@
+{
+  "Flights": [
+    {
+      "ID": "QZ7800_AirAsia",
+      "Provider": "AirAsia",
+      "Airline": {
+        "Name": "AirAsia",
+        "Code": "QZ"
+      },
+      "FlightNumber": "QZ7800",
+      "Departure": {
+        "Code": "CGK",
+        "City": null,
+        "Time": "2025-12-20T23:30:00+07:00"
+      },
+      "Arrival": {
+        "Code": "UPG",
+        "City": null,
+        "Time": "2025-12-21T02:10:00+08:00"
+      },
+      "Layovers": null,
+      "Fare": {
+        "Amount": "720000",
+        "Currency": "IDR"
+      },
+      "Price": 0,
+      "Original": null,
+      "AvailableSeats": 80,
+      "Cabin": "economy",
+      "Aircraft": null,
+      "Amenities": null,
+      "Baggage": {
+        "CarryOn": "Cabin baggage only",
+        "Checked": "Additional fee"
+      },
+      "Warnings": null
+    }
+  ],
+  "Rejected": 0
+}

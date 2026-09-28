@@ -1,0 +1,87 @@
+{
+  "code": 200,
+  "message": "OK",
+  "results": [
+    {
+      "flightNumber": "ID6514",
+      "airlineName": "Batik Air",
+      "airlineIATA": "ID",
+      "origin": "CGK",
+      "destination": "DPS",
+      "departureDateTime": "2025-12-15T07:15:00+0700",
+      "arrivalDateTime": "2025-12-15T10:00:00+0800",
+      "travelTime": "1h 45m",
+      "numberOfStops": 0,
+      "fare": {
+        "basePrice": 980000,
+        "taxes": 120000,
+        "totalPrice": 1100000,
+        "currencyCode": "IDR",
+        "class": "Y"
+      },
+      "seatsAvailable": 32,
+      "aircraftModel": "Airbus A320",
+      "baggageInfo": "7kg cabin, 20kg checked",
+      "onboardServices": [
+        "Snack",
+        "Beverage"
+      ]
+    },
+    {
+      "flightNumber": "ID6520",
+      "airlineName": "Batik Air",
+      "airlineIATA": "ID",
+      "origin": "CGK",
+      "destination": "DPS",
+      "departureDateTime": "2025-12-15T13:30:00+0700",
+      "arrivalDateTime": "2025-12-15T16:20:00+0800",
+      "travelTime": "1h 50m",
+      "numberOfStops": 0,
+      "fare": {
+        "basePrice": 1050000,
+        "taxes": 130000,
+        "totalPrice": 1180000,
+        "currencyCode": "IDR",
+        "class": "Y"
+      },
+      "seatsAvailable": 18,
+      "aircraftModel": "Boeing 737-800",
+      "baggageInfo": "7kg cabin, 20kg checked",
+      "onboardServices": [
+        "Meal",
+        "Beverage",
+        "Entertainment"
+      ]
+    },
+    {
+      "flightNumber": "ID7042",
+      "airlineName": "Batik Air",
+      "airlineIATA": "ID",
+      "origin": "CGK",
+      "destination": "DPS",
+      "departureDateTime": "2025-12-15T18:45:00+0700",
+      "arrivalDateTime": "2025-12-15T23:50:00+0800",
+      "travelTime": "3h 5m",
+      "numberOfStops": 1,
+      "connections": [
+        {
+          "stopAirport": "UPG",
+          "stopDuration": "55m"
+        }
+      ],
+      "fare": {
+        "basePrice": 850000,
+        "taxes": 100000,
+        "totalPrice": 950000,
+        "currencyCode": "IDR",
+        "class": "Y"
+      },
+      "seatsAvailable": 41,
+      "aircraftModel": "Airbus A320",
+      "baggageInfo": "7kg cabin, 20kg checked",
+      "onboardServices": [
+        "Snack"
+      ]
+    }
+  ]
+}
