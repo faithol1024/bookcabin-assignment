@@ -94,12 +94,7 @@ func (s *Service) searchLeg(ctx context.Context, q LegQuery, c Criteria) Leg {
 	defer cancel()
 
 	fo := fanout(ctx, s.sources, leg{q, c.Cabin})
-	flights, unconverted := s.converter.convert(ctx, fo.flights)
-	flights, invalid := validate(ctx, flights)
-	flights = filter(flights, c.Filters, c.Passengers)
-	fillCities(flights)
-	ranked := s.score.rank(flights, c.Passengers)
-	sortFlights(ranked, c.Sort)
+	ranked, flights, dropped := s.process(ctx, fo.flights, c)
 
 	return Leg{
 		LegQuery:           q,
@@ -108,12 +103,24 @@ func (s *Service) searchLeg(ctx context.Context, q LegQuery, c Criteria) Leg {
 		ProvidersQueried:   fo.queried,
 		ProvidersSucceeded: fo.succeeded,
 		ProvidersFailed:    fo.failed,
-		FlightsRejected:    fo.rejected + unconverted + invalid,
+		FlightsRejected:    fo.rejected + dropped,
 		CheapestByProvider: cheapestByProvider(flights),
 		SearchTime:         time.Since(start),
 		CacheHit:           fo.cacheHit,
 		ProviderErrors:     fo.errors,
 	}
+}
+
+// process converts, validates, filters, scores and sorts one set of flights; it also returns the
+// filtered set before scoring and how many flights conversion or validation rejected.
+func (s *Service) process(ctx context.Context, flights []domain.Flight, c Criteria) ([]Flight, []domain.Flight, int) {
+	flights, unconverted := s.converter.convert(ctx, flights)
+	flights, invalid := validate(ctx, flights)
+	flights = filter(flights, c.Filters, c.Passengers)
+	fillCities(flights)
+	ranked := s.score.rank(flights, c.Passengers)
+	sortFlights(ranked, c.Sort)
+	return ranked, flights, unconverted + invalid
 }
 
 func page(flights []Flight, limit, offset int) []Flight {
