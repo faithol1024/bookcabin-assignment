@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"context"
 	"encoding/json"
 	"io"
@@ -233,6 +234,8 @@ func TestRouter_Endpoints(t *testing.T) {
 		{http.MethodGet, "/openapi.yaml", http.StatusOK},
 		{http.MethodGet, "/v1/flights/search", http.StatusMethodNotAllowed},
 		{http.MethodPost, "/v1/flights/search", http.StatusBadRequest}, // empty body
+		{http.MethodGet, "/v1/flights/search/stream", http.StatusMethodNotAllowed},
+		{http.MethodPost, "/v1/flights/search/stream", http.StatusBadRequest}, // empty body
 		{http.MethodGet, "/nope", http.StatusNotFound},
 	}
 	for _, tt := range tests {
@@ -240,5 +243,56 @@ func TestRouter_Endpoints(t *testing.T) {
 		if rec.Code != tt.code {
 			t.Errorf("%s %s = %d, want %d", tt.method, tt.path, rec.Code, tt.code)
 		}
+	}
+}
+
+// TestSearch_StreamsThroughMiddleware reads a real SSE response over a socket, so flushes must pass the middleware.
+func TestSearch_StreamsThroughMiddleware(t *testing.T) {
+	h, _ := testServer(t)
+	srv := httptest.NewServer(h)
+	defer srv.Close()
+	req, err := http.NewRequest(http.MethodPost, srv.URL+"/v1/flights/search/stream", strings.NewReader(sampleRequest))
+	if err != nil {
+		t.Fatal(err)
+	}
+	resp, err := srv.Client().Do(req)
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer resp.Body.Close()
+	if resp.StatusCode != http.StatusOK || resp.Header.Get("Content-Type") != "text/event-stream" {
+		t.Fatalf("status %d, content type %q", resp.StatusCode, resp.Header.Get("Content-Type"))
+	}
+
+	var events []string
+	providers := map[string]bool{}
+	var succeeded float64
+	sc := bufio.NewScanner(resp.Body)
+	sc.Buffer(nil, 1<<20)
+	for sc.Scan() {
+		name, ok := strings.CutPrefix(sc.Text(), "event: ")
+		if !ok {
+			continue
+		}
+		sc.Scan()
+		var data map[string]any
+		if err := json.Unmarshal([]byte(strings.TrimPrefix(sc.Text(), "data: ")), &data); err != nil {
+			t.Fatalf("%s data: %v", name, err)
+		}
+		events = append(events, name)
+		switch name {
+		case "flights":
+			providers[data["provider"].(string)] = true
+		case "leg":
+			succeeded = data["metadata"].(map[string]any)["providers_succeeded"].(float64)
+		}
+	}
+	if err := sc.Err(); err != nil {
+		t.Fatal(err)
+	}
+	// providers may fail at random; each that answered sends one batch before the leg summary
+	n := len(providers)
+	if n == 0 || len(events) != n+2 || events[n] != "leg" || events[n+1] != "done" || succeeded != float64(n) {
+		t.Errorf("events = %v from %d providers, %v succeeded; want one batch per provider, then leg, done", events, n, succeeded)
 	}
 }

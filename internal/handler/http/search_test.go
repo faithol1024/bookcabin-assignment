@@ -43,6 +43,19 @@ func (f *fakeSearcher) Search(_ context.Context, c search.Criteria) (search.Resp
 	return res, nil
 }
 
+// Stream replays Search: each leg's flights as one batch, then its summary.
+func (f *fakeSearcher) Stream(ctx context.Context, c search.Criteria, emit func(search.Event)) error {
+	res, err := f.Search(ctx, c)
+	for i, l := range res.Legs {
+		if len(l.Flights) > 0 {
+			emit(search.Event{Leg: i, Provider: l.Flights[0].Provider, Flights: l.Flights})
+		}
+		l.Flights = nil
+		emit(search.Event{Leg: i, Summary: &l})
+	}
+	return err
+}
+
 func at(s string) time.Time {
 	t, err := time.Parse(time.RFC3339, s)
 	if err != nil {

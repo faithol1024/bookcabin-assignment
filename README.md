@@ -31,7 +31,7 @@ curl -s -X POST localhost:8080/v1/flights/search \
   -d '{"origin":"CGK","destination":"DPS","departureDate":"2025-12-15","returnDate":null,"passengers":1,"cabinClass":"economy"}'
 ```
 
-Other endpoints: `GET /healthz`. The full contract is in [`api/openapi.yaml`](api/openapi.yaml); the running service serves it at `GET /openapi.yaml` and as interactive Swagger UI at http://localhost:8080/docs (loaded from the jsDelivr CDN).
+Other endpoints: `POST /v1/flights/search/stream` (the same search as server-sent events, section 2.6) and `GET /healthz`. The full contract is in [`api/openapi.yaml`](api/openapi.yaml); the running service serves it at `GET /openapi.yaml` and as interactive Swagger UI at http://localhost:8080/docs (loaded from the jsDelivr CDN).
 
 The mock data covers these routes and dates (all December 2025, economy):
 
@@ -53,7 +53,7 @@ The mock data covers these routes and dates (all December 2025, economy):
 
 ## 2. API usage
 
-All five examples below were run against `docker compose up`; outputs are trimmed with `jq`. `search_time_ms` differs between runs, and `cache_hit` depends on whether the same route and date was searched in the last 120 s.
+All six examples below were run against `docker compose up`; outputs are trimmed with `jq`. `search_time_ms` differs between runs, and `cache_hit` depends on whether the same route and date was searched in the last 120 s.
 
 ### 2.1 One-way
 
@@ -213,6 +213,43 @@ curl -s -X POST localhost:8080/v1/flights/search -H 'Content-Type: application/j
 | 502 | `all_providers_failed` | Every provider failed on every leg |
 
 Redis problems never produce an error response.
+
+### 2.6 Streaming (server-sent events)
+
+`POST /v1/flights/search/stream` takes the same body as `/v1/flights/search`, but sends each airline's flights the moment that airline answers instead of waiting for all four.
+
+```bash
+curl -sN -X POST localhost:8080/v1/flights/search/stream -H 'Content-Type: application/json' \
+  -d '{"origin":"CGK","destination":"DPS","departureDate":"2025-12-15","passengers":1,"cabinClass":"economy"}' \
+  | grep -E '^(event|data)' | sed 's/^data: //' \
+  | jq -Rrc '. as $l | try (fromjson | if has("flights") then {leg, provider, ids: [.flights[].id]}
+      elif has("metadata") then {leg, metadata: (.metadata | {total_results, providers_succeeded, providers_failed, cache_hit})}
+      else . end | tojson) catch $l'
+```
+
+```text
+event: flights
+{"leg":0,"provider":"Lion Air","ids":["JT742_LionAir","JT650_LionAir","JT740_LionAir"]}
+event: flights
+{"leg":0,"provider":"Batik Air","ids":["ID6514_BatikAir","ID7042_BatikAir","ID6520_BatikAir"]}
+event: flights
+{"leg":0,"provider":"Garuda Indonesia","ids":["GA400_GarudaIndonesia","GA410_GarudaIndonesia","GA315_GarudaIndonesia"]}
+event: flights
+{"leg":0,"provider":"AirAsia","ids":["QZ532_AirAsia","QZ7250_AirAsia","QZ520_AirAsia","QZ524_AirAsia"]}
+event: leg
+{"leg":0,"metadata":{"total_results":13,"providers_succeeded":4,"providers_failed":0,"cache_hit":true}}
+event: done
+{}
+```
+
+| Event | Data | When |
+| --- | --- | --- |
+| `flights` | `leg` (index into the search's legs), `provider`, `flights` | Once per provider that answered, in arrival order |
+| `leg` | `leg`, `origin`, `destination`, `date`, `metadata` (as in the JSON response) | Once per leg, after all its providers answered or its deadline passed |
+| `done` | `{}` | Last event of a successful search |
+| `error` | a problem detail (same body as the 502) | Instead of `done`, when every provider failed on every leg |
+
+Each `flights` batch is filtered, scored and sorted on its own and is not paged, so `score` compares flights within one batch only; the client merges batches and re-sorts. Validation errors still come back as a plain 400/413 problem before the stream starts. Once streaming, the status is always 200.
 
 ## 3. Architecture
 

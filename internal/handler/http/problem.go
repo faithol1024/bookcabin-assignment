@@ -42,8 +42,12 @@ type problem struct {
 	Errors    []FieldError `json:"errors,omitempty"`
 }
 
-// writeError is the one place errors become HTTP statuses; internal error text never reaches the client.
 func writeError(w http.ResponseWriter, r *http.Request, err error) {
+	writeProblem(w, r, problemFor(r, err))
+}
+
+// problemFor is the one place errors become HTTP statuses; internal error text never reaches the client.
+func problemFor(r *http.Request, err error) problem {
 	var (
 		tooLarge *http.MaxBytesError
 		invalid  *ValidationError
@@ -62,7 +66,7 @@ func writeError(w http.ResponseWriter, r *http.Request, err error) {
 		slog.ErrorContext(r.Context(), "request failed", "error", err)
 		p = internalError
 	}
-	writeProblem(w, r, p)
+	return p
 }
 
 var internalError = problem{Type: "internal_error", Title: "Internal server error", Status: http.StatusInternalServerError, Detail: "An unexpected error occurred."}

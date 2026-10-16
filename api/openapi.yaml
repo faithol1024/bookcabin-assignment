@@ -27,43 +27,7 @@ paths:
       parameters:
         - $ref: "#/components/parameters/RequestID"
       requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/SearchRequest"
-            examples:
-              oneWay:
-                summary: One-way
-                value:
-                  origin: CGK
-                  destination: DPS
-                  departureDate: "2025-12-15"
-                  passengers: 1
-                  cabinClass: economy
-              roundTrip:
-                summary: Round trip with filters
-                value:
-                  origin: CGK
-                  destination: DPS
-                  departureDate: "2025-12-15"
-                  returnDate: "2025-12-20"
-                  passengers: 2
-                  cabinClass: economy
-                  filters:
-                    priceMax: 1500000
-                    maxStops: 0
-                    departureTime: { from: "06:00", to: "12:00" }
-                  sort: { by: price, order: asc }
-                  page: { limit: 10, offset: 0 }
-              multiCity:
-                summary: Multi-city
-                value:
-                  legs:
-                    - { origin: CGK, destination: DPS, date: "2025-12-15" }
-                    - { origin: DPS, destination: SUB, date: "2025-12-18" }
-                  passengers: 1
-                  cabinClass: economy
+        $ref: "#/components/requestBodies/SearchRequest"
       responses:
         "200":
           description: Search results; the shape depends on the request type.
@@ -85,6 +49,42 @@ paths:
           $ref: "#/components/responses/InternalError"
         "502":
           $ref: "#/components/responses/AllProvidersFailed"
+
+  /v1/flights/search/stream:
+    post:
+      summary: Stream search results as server-sent events
+      description: |
+        Takes the same body as `/v1/flights/search`, but sends each provider's flights the moment
+        that provider answers instead of waiting for all of them:
+        - `flights`: `{leg, provider, flights}`, once per provider that answered, in arrival order.
+          Each batch is filtered, scored and sorted on its own and is not paged; the client merges batches.
+        - `leg`: `{leg, origin, destination, date, metadata}`, once per leg after all its providers finished.
+        - `done`: `{}`, the last event of a successful search.
+        - `error`: a problem detail, instead of `done`, when every provider failed on every leg.
+
+        Invalid requests get the same 400/413 problems as `/v1/flights/search`, before the stream starts.
+        Once streaming, the status is 200.
+      operationId: streamFlights
+      parameters:
+        - $ref: "#/components/parameters/RequestID"
+      requestBody:
+        $ref: "#/components/requestBodies/SearchRequest"
+      responses:
+        "200":
+          description: Server-sent events `flights`, `leg`, then `done` or `error`.
+          headers:
+            X-Request-ID:
+              $ref: "#/components/headers/RequestID"
+          content:
+            text/event-stream:
+              schema:
+                type: string
+        "400":
+          $ref: "#/components/responses/ValidationError"
+        "413":
+          $ref: "#/components/responses/PayloadTooLarge"
+        "500":
+          $ref: "#/components/responses/InternalError"
 
   /healthz:
     get:
@@ -129,6 +129,46 @@ paths:
                 type: string
 
 components:
+  requestBodies:
+    SearchRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/SearchRequest"
+          examples:
+            oneWay:
+              summary: One-way
+              value:
+                origin: CGK
+                destination: DPS
+                departureDate: "2025-12-15"
+                passengers: 1
+                cabinClass: economy
+            roundTrip:
+              summary: Round trip with filters
+              value:
+                origin: CGK
+                destination: DPS
+                departureDate: "2025-12-15"
+                returnDate: "2025-12-20"
+                passengers: 2
+                cabinClass: economy
+                filters:
+                  priceMax: 1500000
+                  maxStops: 0
+                  departureTime: { from: "06:00", to: "12:00" }
+                sort: { by: price, order: asc }
+                page: { limit: 10, offset: 0 }
+            multiCity:
+              summary: Multi-city
+              value:
+                legs:
+                  - { origin: CGK, destination: DPS, date: "2025-12-15" }
+                  - { origin: DPS, destination: SUB, date: "2025-12-18" }
+                passengers: 1
+                cabinClass: economy
+
   parameters:
     RequestID:
       name: X-Request-ID

@@ -13,5 +13,6 @@ func newRouter(h *httphandler.Handler, logger *slog.Logger) http.Handler {
 	mux.HandleFunc("GET /docs", httphandler.Docs)
 	mux.HandleFunc("GET /openapi.yaml", httphandler.OpenAPISpec)
 	mux.HandleFunc("POST /v1/flights/search", h.Search)
+	mux.HandleFunc("POST /v1/flights/search/stream", h.SearchStream)
 	return httphandler.Middleware(mux, logger)
 }
